@@ -1,4 +1,7 @@
+import os
 import pandas as pd
+from tqdm import tqdm
+import time
 
 def read_excel(file_name, sheet_name):
     """
@@ -44,13 +47,32 @@ def create_unique_excels(dataset, column_name, excel_name, excel_sheet_name):
 
         get_issue_name = dataset[i]
         create_excel_file = get_issue_name + ".xlsx"
-
         excel_data = read_excel(excel_name, excel_sheet_name)
-
         issue_found = excel_data[excel_data[column_name] == get_issue_name]
-
         issue_found.to_excel(create_excel_file)
 
         i = i + 1
 
     return
+
+def func_bar(a, b):
+        """
+        A function to generate a loading bar for beautification purposes.
+        :param a:
+        :param b:
+        :return NONE:
+        """
+        for i in tqdm(range(a),
+                      desc=b,
+                      ascii=False):
+            time.sleep(0.01)
+        return
+
+def if_file_exists(file_name):
+    """
+    A function to check if any file exists in the specified path
+    :param file_name:
+    :return:
+    """
+    file_exist = os.path.exists(file_name)
+    return(file_exist)
